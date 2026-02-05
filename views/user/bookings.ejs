@@ -1,29 +1,60 @@
 <%- include("../partials/header") %>
 
 <div class="card">
-  <h2>👤 My Bookings</h2>
+  <h2><i class="fas fa-user-circle"></i> My Bookings</h2>
 
-  <table>
-    <tr>
-      <th>#</th>
-      <th>Car</th>
-      <th>Status</th>
-      <th>Total</th>
-    </tr>
-
-    <% bookings.forEach((b, i) => { %>
+  <div style="overflow-x: auto; margin-top: 20px;">
+    <table>
       <tr>
-        <td><%= i + 1 %></td>
-        <td><%= b.car_id?.name || b.car_id %></td>
-        <td>
-          <span class="status-badge <%= b.status === 'confirmed' ? 'confirmed' : 'pending' %>">
-          <%= b.status.toUpperCase() %>
-          </span>
-        </td>
-        <td>$<%= b.total_cost %></td>
+        <th style="width: 60px; text-align: center;">#</th>
+        <th><i class="fas fa-car"></i> Car</th>
+        <th><i class="fas fa-info-circle"></i> Status</th>
+        <th><i class="fas fa-dollar-sign"></i> Total Cost</th>
       </tr>
-    <% }) %>
-  </table>
+
+      <% bookings.forEach((b, i) => { %>
+        <tr>
+          <td style="text-align: center; font-weight: 600; color: #667eea;"><%= i + 1 %></td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-car" style="color: white; font-size: 1.2rem;"></i>
+              </div>
+              <strong style="font-size: 1.05rem;"><%= b.car_id?.name || b.car_id %></strong>
+            </div>
+          </td>
+          <td>
+            <% if (b.status === 'confirmed') { %>
+              <span style="background: linear-gradient(135deg, #11998e, #38ef7d); color: white; padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; display: inline-block; box-shadow: 0 3px 10px rgba(17, 153, 142, 0.3);">
+                <i class="fas fa-check-circle"></i> CONFIRMED
+              </span>
+            <% } else { %>
+              <span style="background: linear-gradient(135deg, #f39c12, #e67e22); color: white; padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; display: inline-block; box-shadow: 0 3px 10px rgba(243, 156, 18, 0.3);">
+                <i class="fas fa-clock"></i> <%= b.status.toUpperCase() %>
+              </span>
+            <% } %>
+          </td>
+          <td>
+            <span style="background: linear-gradient(135deg, #11998e, #38ef7d); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; font-size: 1.15rem;">
+              $<%= b.total_cost %>
+            </span>
+          </td>
+        </tr>
+      <% }) %>
+    </table>
+  </div>
+
+  <% if (bookings.length === 0) { %>
+    <div style="text-align: center; padding: 40px; color: #95a5a6;">
+      <i class="fas fa-calendar-times" style="font-size: 4rem; margin-bottom: 20px; opacity: 0.3;"></i>
+      <p style="font-size: 1.2rem; margin-bottom: 10px;">You don't have any bookings yet</p>
+      <a href="/bookings/create">
+        <button style="margin-top: 15px; padding: 12px 24px;">
+          <i class="fas fa-plus-circle"></i> Create Your First Booking
+        </button>
+      </a>
+    </div>
+  <% } %>
 </div>
 
 <%- include("../partials/footer") %>

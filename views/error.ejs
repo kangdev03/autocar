@@ -1,11 +1,30 @@
 <%- include("partials/header") %>
 
-<div class="card">
-  <h2 class="error">❌ Error</h2>
-  <p class="error"><%= message %></p>
+<div class="card" style="max-width: 600px; margin: 50px auto; text-align: center;">
+  <div style="margin-bottom: 30px;">
+    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #e74c3c, #c0392b); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3); animation: shake 0.5s;">
+      <i class="fas fa-exclamation-triangle" style="color: white; font-size: 3rem;"></i>
+    </div>
+    <h2 style="color: #e74c3c; margin-bottom: 15px; font-size: 2rem;">
+      <i class="fas fa-times-circle"></i> Oops! Something went wrong
+    </h2>
+    <div style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(192, 57, 43, 0.1)); padding: 20px; border-radius: 10px; border-left: 4px solid #e74c3c; margin: 20px 0;">
+      <p style="color: #2c3e50; font-size: 1.1rem; margin: 0; font-weight: 500;"><%= message %></p>
+    </div>
+  </div>
   <a href="/bookings">
-    <button class="btn-secondary">Back</button>
+    <button class="btn-secondary" style="padding: 14px 32px; font-size: 1.05rem;">
+      <i class="fas fa-home"></i> Back to Home
+    </button>
   </a>
 </div>
+
+<style>
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px) rotate(-5deg); }
+    75% { transform: translateX(10px) rotate(5deg); }
+  }
+</style>
 
 <%- include("partials/footer") %>

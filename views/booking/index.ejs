@@ -1,45 +1,78 @@
 <%- include("../partials/header") %>
 
 <div class="card">
-  <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>📑 Booking List</h2>
-    <div>
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+    <h2><i class="fas fa-calendar-check"></i> Booking List</h2>
+    <div style="display: flex; align-items: center; gap: 15px;">
       <% if (typeof user !== 'undefined' && user) { %>
-        <a href="/bookings/create"><button>+ Create Booking</button></a>
+        <a href="/bookings/create">
+          <button style="padding: 12px 24px;">
+            <i class="fas fa-plus-circle"></i> Create Booking
+          </button>
+        </a>
       <% } %>
-      <span style="color:#888; margin-left:10px;">Total: <%= bookings.length %></span>
+      <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 10px 20px; border-radius: 20px; font-weight: 600; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
+        <i class="fas fa-list-ol"></i> Total: <%= bookings.length %>
+      </div>
     </div>
   </div>
 
-  <table>
-    <tr>
-      <th>#</th>
-      <th>Car</th>
-      <th>Status</th>
-      <th>Action</th>
-    </tr>
-
-    <% bookings.forEach((b, i) => { %>
+  <div style="overflow-x: auto;">
+    <table>
       <tr>
-        <td><%= i + 1 %></td>
-        <td>
-          <strong><%= b.car_id?.name || b.car_id %></strong>
-        </td>
-        <td>
-          <% if (b.status === 'confirmed') { %>
-            <span style="color:#27ae60; font-weight:bold;">CONFIRMED</span>
-          <% } else { %>
-            <span style="color:#e67e22; font-weight:bold;">PENDING</span>
-          <% } %>
-        </td>
-        <td>
-          <a href="/bookings/<%= b._id %>">
-            <button class="btn-secondary">Detail</button>
-          </a>
-        </td>
+        <th style="width: 60px; text-align: center;">#</th>
+        <th><i class="fas fa-car"></i> Car</th>
+        <th><i class="fas fa-info-circle"></i> Status</th>
+        <th style="text-align: center;"><i class="fas fa-cog"></i> Action</th>
       </tr>
-    <% }) %>
-  </table>
+
+      <% bookings.forEach((b, i) => { %>
+        <tr>
+          <td style="text-align: center; font-weight: 600; color: #667eea;"><%= i + 1 %></td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-car" style="color: white; font-size: 1.2rem;"></i>
+              </div>
+              <strong style="font-size: 1.05rem;"><%= b.car_id?.name || b.car_id %></strong>
+            </div>
+          </td>
+          <td>
+            <% if (b.status === 'confirmed') { %>
+              <span style="background: linear-gradient(135deg, #11998e, #38ef7d); color: white; padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; display: inline-block; box-shadow: 0 3px 10px rgba(17, 153, 142, 0.3);">
+                <i class="fas fa-check-circle"></i> CONFIRMED
+              </span>
+            <% } else { %>
+              <span style="background: linear-gradient(135deg, #f39c12, #e67e22); color: white; padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; display: inline-block; box-shadow: 0 3px 10px rgba(243, 156, 18, 0.3);">
+                <i class="fas fa-clock"></i> PENDING
+              </span>
+            <% } %>
+          </td>
+          <td style="text-align: center;">
+            <a href="/bookings/<%= b._id %>">
+              <button class="btn-secondary" style="padding: 8px 20px;">
+                <i class="fas fa-eye"></i> Details
+              </button>
+            </a>
+          </td>
+        </tr>
+      <% }) %>
+    </table>
+  </div>
+
+  <% if (bookings.length === 0) { %>
+    <div style="text-align: center; padding: 40px; color: #95a5a6;">
+      <i class="fas fa-calendar-times" style="font-size: 4rem; margin-bottom: 20px; opacity: 0.3;"></i>
+      <p style="font-size: 1.2rem; margin-bottom: 10px;">No bookings yet</p>
+      <% if (typeof user !== 'undefined' && user) { %>
+        <a href="/bookings/create">
+          <button style="margin-top: 15px; padding: 12px 24px;">
+            <i class="fas fa-plus-circle"></i> Create Your First Booking
+          </button>
+        </a>
+      <% } %>
+    </div>
+  <% } %>
 </div>
 
 <%- include("../partials/footer") %>
