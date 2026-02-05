@@ -32,6 +32,10 @@ app.use((req, res, next) => {
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
+app.get("/", (req, res) => {
+  res.redirect("/cars");
+});
+
 app.use("/auth", authRoutes);
 app.use("/bookings", bookingRoutes);
 app.use("/users", userRoutes);
